@@ -2,10 +2,10 @@ package ren.kujoka.Domemo
 import scala.util.Random.shuffle
 import scala.collection.mutable.ArrayBuffer
 
-class Player(protected val playerNum: Int) {
-  protected var hands_ = ArrayBuffer.empty[Int]
-  protected var exist = ArrayBuffer.fill(7)(true)
-  protected val playerName_ =
+class Player(private val playerNum: Int) {
+  private var hands_ = ArrayBuffer.empty[Int]
+  protected var exist = Array.fill(7)(true)
+  private val playerName_ =
     if (playerNum == 0) "Your" else playerNum + 1 + "P's"
 
   def show() {
@@ -72,7 +72,6 @@ class AccurateComputer(playerNum: Int) extends Player(playerNum) {
     for (log <- logs) {
       if (exist(log - 1) == true) {
         if (nums(log - 1) == log - 1) {
-          println(log +" "+ exist(log - 1))
           exist(log - 1) = false
         } else if (nums(log - 1) == log - 2) {
           nums(log - 1) = nums(log - 1) + 1
