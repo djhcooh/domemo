@@ -2,21 +2,21 @@ package ren.kujoka.Domemo
 import scala.util.Random.shuffle
 import ren.kujoka.common.Reader.readIntLoop
 import scala.io.StdIn.readLine
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Queue
 
 object Domemo {
   private var cards: Queue[Int] = new Queue[Int]
-  private var openCards: Seq[Int] = _
-  private var players: Seq[Player] = _
+  private var openCards: ArrayBuffer[Int] = _
+  private var players:  ArrayBuffer[Player] = _
   private var logs: Queue[Int] = new Queue[Int]
 
   def main(args:Array[String]) {
     var yn = ""
     do {
       cards = new Queue[Int]
-      openCards = Seq.fill(7)(0)
-      players = Seq.empty[Player]
+      openCards = ArrayBuffer.fill(7)(0)
+      players = ArrayBuffer.empty[Player]
       logs = new Queue[Int]
       game()
       var end = false
@@ -60,7 +60,7 @@ object Domemo {
   }
 
   def playersSet(nop:Int) {
-    players = players :+ new Player(0)
+    players = players += new Player(0)
     for (i <- 1 to nop - 1) {
       val str = if (i == 1) 
       """|Please select the nature of the computer
@@ -72,11 +72,11 @@ object Domemo {
       val cpselect =
         readIntLoop(str, "Please enter the correct value", 0, 2)
       players =
-        if (cpselect == 0) players :+ new AccurateComputer(i) 
-        else if (cpselect == 1) players :+ new Player(i)
-        else players :+ new RandomComputer(i)
+        if (cpselect == 0) players += new AccurateComputer(i) 
+        else if (cpselect == 1) players += new Player(i)
+        else players += new RandomComputer(i)
     }
-    players = players :+ new Player(nop)
+    players = players += new Player(nop)
     for (player <- players) {
       for (_ <- 1 to 6 / (nop / 2) + 1) {
         player.handsPlus(cards.dequeue)
@@ -91,12 +91,9 @@ object Domemo {
 
   def answerCheck(pNum:Int, num:Int):Boolean = {
     if (logs.length >= players.length - 2) logs.dequeue
-    var handsTemp = ListBuffer.empty[Int]
-    handsTemp = players(pNum).hands.to[ListBuffer]
-    if (handsTemp.indexWhere(n => n == num) != -1) {
+    if (players(pNum).hands.indexWhere(n => n == num) != -1) {
       println(players(pNum).playerName + " answer = " + num + " is exist")
-      handsTemp.remove(handsTemp.indexWhere(n => n == num))
-      players(pNum).hands = handsTemp.toSeq
+      players(pNum).hands.remove(players(pNum).hands.indexWhere(n => n == num))
       openCardsAdd(num)
     } else {
       logs += num
@@ -112,7 +109,7 @@ object Domemo {
   }
 
   def openCardsAdd(num:Int) {
-    openCards = openCards.updated(num - 1, openCards(num - 1) + 1)  
+    openCards(num - 1) = openCards(num - 1) + 1
   }
 
   def openCardsShow(nop:Int) {
