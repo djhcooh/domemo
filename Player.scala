@@ -15,7 +15,7 @@ class Player(private val playerNum: Int) {
   }
 
   def handsPlus(card: Int) {
-    hands = hands += card
+    hands += card
   }
 
   def notExist(num: Int) {
@@ -54,7 +54,7 @@ class RandomComputer(playerNum: Int) extends Player(playerNum) {
     }
     var ans = ArrayBuffer.empty[Int] 
     for (i <- 0 to 6 if nums(i) != (i + 1); if exist(i) == true) {
-      ans = ans += (i + 1)
+      ans += (i + 1)
     }
     ans = shuffle(ans)
     ans.head

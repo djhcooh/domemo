@@ -60,7 +60,7 @@ object Domemo {
   }
 
   def playersSet(nop:Int) {
-    players = players += new Player(0)
+    players += new Player(0)
     for (i <- 1 to nop - 1) {
       val str = if (i == 1) 
       """|Please select the nature of the computer
@@ -71,12 +71,15 @@ object Domemo {
          | > """.stripMargin else " > "
       val cpselect =
         readIntLoop(str, "Please enter the correct value", 0, 2)
-      players =
-        if (cpselect == 0) players += new AccurateComputer(i) 
-        else if (cpselect == 1) players += new Player(i)
-        else players += new RandomComputer(i)
+      if (cpselect == 0) {
+        players += new AccurateComputer(i) 
+      } else if (cpselect == 1) {
+        players += new Player(i)
+      } else {
+        players += new RandomComputer(i)
+      }
     }
-    players = players += new Player(nop)
+    players += new Player(nop)
     for (player <- players) {
       for (_ <- 1 to 6 / (nop / 2) + 1) {
         player.handsPlus(cards.dequeue)
