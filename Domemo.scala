@@ -61,7 +61,7 @@ object Domemo {
 
   def playersSet(nop:Int) {
     players += new Player(0)
-    for (i <- 1 to nop - 1) {
+    for (i <- 1 until nop) {
       val str = if (i == 1) 
       """|Please select the nature of the computer
          |0:Accurate
@@ -117,7 +117,7 @@ object Domemo {
 
   def openCardsShow(nop:Int) {
     print("[Hand of Other Players]")
-    for (i <- 1 to nop - 1)
+    for (i <- 1 until nop)
       players(i).show()
     var cnt = 1
     println("\n[Open Cards]")
