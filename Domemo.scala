@@ -1,6 +1,6 @@
 package ren.kujoka.Domemo
 import scala.util.Random.shuffle
-import ren.kujoka.common.Reader.readIntLoop
+import ren.kujoka.common.Reader._
 import scala.io.StdIn.readLine
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Queue
@@ -19,17 +19,7 @@ object Domemo {
       players = ArrayBuffer.empty[Player]
       logs = new Queue[Int]
       game()
-      var end = false
-      do {
-        yn = readLine("\nPlay again?(y/n) > ")
-        end =
-          if (yn == "y" || yn == "n") {
-            true
-          } else {
-            println("Please enter y or n")
-            false
-          }
-      } while (end == false)
+      yn = yesOrNo("Play again?", "y", "n")
     } while (yn == "y")
   }
 

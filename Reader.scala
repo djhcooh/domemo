@@ -21,4 +21,13 @@ object Reader {
         readIntLoop(msg1, msg2)
     }
   }
+
+  def yesOrNo(msg: String, yes: String, no: String): String = {
+    var rl = ""
+    do {
+      rl = readLine(msg + "(" + yes + "/" + no +") > ")
+      if (rl != yes && rl != no) println("Please enter " + yes + " or " + no)
+    } while (rl != yes && rl != no)
+      rl
+  }
 }
