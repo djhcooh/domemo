@@ -25,7 +25,7 @@ object Domemo {
 
   def game() {
     cardsSet()
-    val nop = readIntLoop("Please enter the number of people > ",
+    val nop = readIntLoop("Please enter the number of people(2~5) > ",
       "Please enter the correct value", 2, 5)
     playersSet(nop)
     for (card <- cards)
@@ -33,7 +33,7 @@ object Domemo {
     var gameEnd = false
     do {
       openCardsShow(nop)
-      val ans = readIntLoop("Please enter a number(1-7) > ",
+      val ans = readIntLoop("Please enter a number(1~7) > ",
           "Please enter the correct value", 1, 7)
       gameEnd = answerCheck(0, ans)
       for (i <- 1 until nop; if gameEnd == false) {
